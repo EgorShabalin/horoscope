@@ -1,0 +1,16 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python3 -u main.py
+    ports:
+      - "10001:10001"
+    volumes:
+      - .:/code
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: bridge
