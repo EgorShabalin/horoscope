@@ -17,8 +17,8 @@ weekly_trigger = CronTrigger(
 )
 
 daily_trigger = CronTrigger(
-    hour=23,
-    minute=59,
+    hour=0,
+    minute=5,
     timezone="Europe/Istanbul",
 )
 
