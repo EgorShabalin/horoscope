@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <center><a href="/"><h6>Back</h6></a></center>
+    <center><h1>{{ zodiac | capitalize }}</h1></center>
+    <div>{{ text | safe }}</div>
+    <br>
+    <center><a href="/"><h6>Back</h6></a></center>
+{% endblock %}

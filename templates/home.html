@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <center><h2>A horoscope for today</h2></center>
+    {% for zodiac in zodiacs %}
+        <center><h3><a href="/{{ zodiac | lower }}">{{ zodiac | capitalize }}</a></h3></center>
+    {% endfor %}
+{% endblock %}
