@@ -38,8 +38,8 @@ class Creator:
                     "text": f"""You are a professional astrologist.
     Create a professional horoscope for today for {zodiac}.
     Align the text as an article for a website.
-    
-    Don't write any title or date. Don't ask questions. Don't ask for more information.
+
+    Don't write any title or date. Don't use paragraph titles. Don't ask questions. Don't ask for more information.
     Your answer should only content an exact article with no other words.""",
                 }, # The text should be about 500 symbols legth depending on important points you need to tell.
             )

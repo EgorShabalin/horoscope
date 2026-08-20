@@ -23,7 +23,7 @@ daily_trigger = CronTrigger(
 )
 
 test_trigger = CronTrigger(
-    minute=10
+    minute='*/10'
 )
 
 scheduler.add_job(
