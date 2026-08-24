@@ -217,12 +217,45 @@ main > center:nth-child(1)::before {
 }
 
 /* ==========================================================================
-   HOME PAGE — subtitle + zodiac dial plates
+   HOME PAGE — nav + subtitle + zodiac dial plates
    ========================================================================== */
 
 main > center:nth-child(2) {
   grid-column: 1 / -1;
   margin: 4px 0 28px;
+}
+
+/* Language navigation styles */
+main > center:nth-child(2) nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+main > center:nth-child(2) nav a {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ivory-dim);
+  padding: 6px 16px;
+  border: 1px solid var(--brass-dim);
+  border-radius: 999px;
+  background: var(--ink-2);
+  box-shadow: inset 0 0 0 1px rgba(201, 161, 92, 0.08);
+  transition: border-color 0.25s ease, background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+main > center:nth-child(2) nav a:hover,
+main > center:nth-child(2) nav a:focus-visible {
+  border-color: var(--brass);
+  background: var(--ink-3);
+  color: var(--brass-bright);
+  transform: translateY(-2px);
 }
 
 main > center:nth-child(2) h2 {
@@ -285,32 +318,33 @@ main > center:nth-child(n+3) h3 a::after {
   font-size: 0.58rem;
   letter-spacing: 0.05em;
   color: var(--verdigris);
+  white-space: pre; /* allow line break */
 }
 
 main > center:nth-child(3)  h3 a::before { content: "♈"; } /* Aries */
-main > center:nth-child(3)  h3 a::after  { content: "000°–030°"; }
+main > center:nth-child(3)  h3 a::after  { content: "MAR 21-APR 19\A 000°–030°"; }
 main > center:nth-child(4)  h3 a::before { content: "♉"; } /* Taurus */
-main > center:nth-child(4)  h3 a::after  { content: "030°–060°"; }
+main > center:nth-child(4)  h3 a::after  { content: "APR 20-MAY 20\A 030°–060°"; }
 main > center:nth-child(5)  h3 a::before { content: "♊"; } /* Gemini */
-main > center:nth-child(5)  h3 a::after  { content: "060°–090°"; }
+main > center:nth-child(5)  h3 a::after  { content: "MAY 21-JUN 20\A 060°–090°"; }
 main > center:nth-child(6)  h3 a::before { content: "♋"; } /* Cancer */
-main > center:nth-child(6)  h3 a::after  { content: "090°–120°"; }
+main > center:nth-child(6)  h3 a::after  { content: "JUN 21-JUL 22\A 090°–120°"; }
 main > center:nth-child(7)  h3 a::before { content: "♌"; } /* Leo */
-main > center:nth-child(7)  h3 a::after  { content: "120°–150°"; }
+main > center:nth-child(7)  h3 a::after  { content: "JUL 23-AUG 22\A 120°–150°"; }
 main > center:nth-child(8)  h3 a::before { content: "♍"; } /* Virgo */
-main > center:nth-child(8)  h3 a::after  { content: "150°–180°"; }
+main > center:nth-child(8)  h3 a::after  { content: "AUG 23-SEP 22\A 150°–180°"; }
 main > center:nth-child(9)  h3 a::before { content: "♎"; } /* Libra */
-main > center:nth-child(9)  h3 a::after  { content: "180°–210°"; }
+main > center:nth-child(9)  h3 a::after  { content: "SEP 23-OCT 22\A 180°–210°"; }
 main > center:nth-child(10) h3 a::before { content: "♏"; } /* Scorpio */
-main > center:nth-child(10) h3 a::after  { content: "210°–240°"; }
+main > center:nth-child(10) h3 a::after  { content: "OCT 23-NOV 21\A 210°–240°"; }
 main > center:nth-child(11) h3 a::before { content: "♐"; } /* Sagittarius */
-main > center:nth-child(11) h3 a::after  { content: "240°–270°"; }
+main > center:nth-child(11) h3 a::after  { content: "NOV 22-DEC 21\A 240°–270°"; }
 main > center:nth-child(12) h3 a::before { content: "♑"; } /* Capricorn */
-main > center:nth-child(12) h3 a::after  { content: "270°–300°"; }
+main > center:nth-child(12) h3 a::after  { content: "DEC 22-JAN 19\A 270°–300°"; }
 main > center:nth-child(13) h3 a::before { content: "♒"; } /* Aquarius */
-main > center:nth-child(13) h3 a::after  { content: "300°–330°"; }
+main > center:nth-child(13) h3 a::after  { content: "JAN 20-FEB 18\A 300°–330°"; }
 main > center:nth-child(14) h3 a::before { content: "♓"; } /* Pisces */
-main > center:nth-child(14) h3 a::after  { content: "330°–360°"; }
+main > center:nth-child(14) h3 a::after  { content: "FEB 19-MAR 20\A 330°–360°"; }
 
 /* spinning calibration ring, revealed on hover/focus */
 main > center:nth-child(n+3) h3 a::marker { content: none; }

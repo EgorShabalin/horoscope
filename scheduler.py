@@ -18,17 +18,17 @@ weekly_trigger = CronTrigger(
 
 daily_trigger = CronTrigger(
     hour=0,
-    minute=5,
+    minute=1,
     timezone="Europe/Istanbul",
 )
 
 test_trigger = CronTrigger(
-    minute='*/10'
+    minute='*/5'
 )
 
 scheduler.add_job(
     func=creator.get_all_zodiacs_articles,
-    trigger=test_trigger,
+    trigger=daily_trigger,
     # max_instances=1,
     # coalesce=True,
 )

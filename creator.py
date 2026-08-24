@@ -6,6 +6,7 @@ import asyncio
 import json
 import os
 from datetime import datetime, timedelta
+from babel.dates import format_date
 
 
 logger = logging.getLogger(__name__)
@@ -20,10 +21,19 @@ class Creator:
     horoscope_data = None
 
 
-    async def get_current_timestamp(self) -> str:
-        current_time = datetime.now() + timedelta(hours=3)
-        current_time = current_time.strftime("%Y-%m-%d_%H-%M-%S")
-        return current_time
+    async def get_current_timestamp(self) -> dict:
+        result = {}
+        now = datetime.now()
+        current_time = now + timedelta(hours=3)
+        current_timestamp = current_time.strftime("%Y-%m-%d_%H-%M-%S")
+        current_date_en = format_date(current_time, format="d MMMM y", locale="en")
+        current_date_ru = format_date(current_time, format="d MMMM y", locale="ru")
+        current_date_tr = format_date(current_time, format="d MMMM y", locale="tr")
+        result['current_timestamp'] = current_timestamp
+        result['current_date_en'] = current_date_en
+        result['current_date_ru'] = current_date_ru
+        result['current_date_tr'] = current_date_tr
+        return result
 
 
     async def create_raw_article(
@@ -147,13 +157,15 @@ class Creator:
 
     async def get_all_zodiacs_articles(self) -> dict:
         horoscope_dict = {}
-        current_timestamp = await self.get_current_timestamp()
-        async with self.httpx_client as client:
-            tasks = [self.create_article(zodiac, client) for zodiac in config.ZODIACS]
-            results = await asyncio.gather(*tasks, return_exceptions=True)
-        for zodiac, result in zip(config.ZODIACS, results):
+        current_time = await self.get_current_timestamp()
+        current_timestamp = current_time.get('current_timestamp')
+        zodiacs = config.ZODIACS.keys()
+        tasks = [self.create_article(zodiac, self.httpx_client) for zodiac in zodiacs]
+        results = await asyncio.gather(*tasks, return_exceptions=True)
+        for zodiac, result in zip(zodiacs, results):
             result = self.clean_text(text=result)
             horoscope_dict[zodiac] = result
+        horoscope_dict.update(current_time)
         with open(file=f'horoscopes/{current_timestamp}_horoscope.txt', mode='w') as file:
             file.write(json.dumps(obj=horoscope_dict, indent=4, ensure_ascii=False))
         self.horoscope_data = horoscope_dict

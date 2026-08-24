@@ -18,10 +18,12 @@ async def home(
     request: Request,
 ):
     try:
+        current_date = creator.horoscope_data.get('current_date_en')
         return templates.TemplateResponse(
                 request=request,
                 context={
-                    "zodiacs": config.ZODIACS
+                    "zodiacs": config.ZODIACS.keys(),
+                    "date": current_date,
                 },
                 name='home.html',
             )
