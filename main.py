@@ -28,7 +28,7 @@ app.include_router(website_router)
 async def main() -> None:
     try:
         data_init = creator.initialize_data()
-        if not data_init:
+        if data_init is False:
             await creator.get_all_zodiacs_articles()
         scheduler.start()
         uvicorn_config = uvicorn.Config(app=app, host=config.HOST, port=int(config.PORT))

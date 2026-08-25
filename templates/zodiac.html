@@ -1,9 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <center><a href="/"><h6>Back</h6></a></center>
+    <center><a href="/{{ lang }}">
+            {% if lang and lang == 'en' %}
+                <h6>Back</h6>
+            {% elif lang and lang == 'tr' %}
+                <h6>Geri</h6>
+            {% elif lang and lang == 'ru' %}
+                <h6>Назад</h6>
+            {% endif %}
+        </a></center>
     <center><h1>{{ zodiac | capitalize }}</h1></center>
     <div>{{ text | safe }}</div>
     <br>
-    <center><a href="/"><h6>Back</h6></a></center>
+    <center><a href="/{{ lang }}">
+            {% if lang and lang == 'en' %}
+                <h6>Back</h6>
+            {% elif lang and lang == 'tr' %}
+                <h6>Geri</h6>
+            {% elif lang and lang == 'ru' %}
+                <h6>Назад</h6>
+            {% endif %}
+        </a></center>
 {% endblock %}

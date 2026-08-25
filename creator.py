@@ -7,6 +7,7 @@ import json
 import os
 from datetime import datetime, timedelta
 from babel.dates import format_date
+from typing import Literal
 
 
 logger = logging.getLogger(__name__)
@@ -30,9 +31,10 @@ class Creator:
         current_date_ru = format_date(current_time, format="d MMMM y", locale="ru")
         current_date_tr = format_date(current_time, format="d MMMM y", locale="tr")
         result['current_timestamp'] = current_timestamp
-        result['current_date_en'] = current_date_en
-        result['current_date_ru'] = current_date_ru
-        result['current_date_tr'] = current_date_tr
+        result['current_date'] = {}
+        result['current_date']['en'] = current_date_en
+        result['current_date']['ru'] = current_date_ru
+        result['current_date']['tr'] = current_date_tr
         return result
 
 
@@ -144,15 +146,53 @@ class Creator:
             return traceback.format_exc()
 
 
+    async def translate_text(
+            self,
+            lang: Literal['Russian', 'Turkish'],
+            text: str,
+            client: httpx.AsyncClient,
+    ) -> str:
+        try:
+            response = await client.post(
+                url=self.my_api_url,
+                params={
+                    "text": f"""You are a professional translations writer.
+    Translate carefuly this text to {lang} language:
+    {text}""",
+                },
+            )
+            result = response.content.decode("utf-8")
+            print(f"The text has been checked:\n{result}\n")
+        except Exception:
+            full_exception = traceback.format_exc()
+            return full_exception
+
+        return result
+
     async def create_article(
             self,
             zodiac: str,
             client=httpx_client,
-    ):
+    ) -> dict:
+        result = {
+            zodiac:{
+                'en': '',
+                'tr': '',
+                'ru': '',
+            }
+        }
         raw_text = await self.create_raw_article(zodiac=zodiac, client=client)
         cheked_text = await self.check_article_text(text=raw_text, client=client)
-        html_article = await self.convert_to_html(text=cheked_text, client=client)
-        return html_article
+        tr_text = await self.translate_text(lang='Turkish', text=cheked_text, client=client)
+        ru_text = await self.translate_text(lang='Russian', text=cheked_text, client=client)
+        en_html_article = await self.convert_to_html(text=cheked_text, client=client)
+        tr_html_article = await self.convert_to_html(text=tr_text, client=client)
+        ru_html_article = await self.convert_to_html(text=ru_text, client=client)
+        result[zodiac]['en'] = self.clean_text(text=en_html_article)
+        result[zodiac]['tr'] = self.clean_text(text=tr_html_article)
+        result[zodiac]['ru'] = self.clean_text(text=ru_html_article)
+
+        return result
 
 
     async def get_all_zodiacs_articles(self) -> dict:
@@ -162,9 +202,9 @@ class Creator:
         zodiacs = config.ZODIACS.keys()
         tasks = [self.create_article(zodiac, self.httpx_client) for zodiac in zodiacs]
         results = await asyncio.gather(*tasks, return_exceptions=True)
-        for zodiac, result in zip(zodiacs, results):
-            result = self.clean_text(text=result)
-            horoscope_dict[zodiac] = result
+        results.append(current_time)
+        for zodiac, res in zip(zodiacs, results):
+            horoscope_dict[zodiac] = res.get(zodiac)
         horoscope_dict.update(current_time)
         with open(file=f'horoscopes/{current_timestamp}_horoscope.txt', mode='w') as file:
             file.write(json.dumps(obj=horoscope_dict, indent=4, ensure_ascii=False))
@@ -205,12 +245,14 @@ class Creator:
             self,
             file_path: str
     ) -> dict:
-        with open(file=file_path, mode='r') as file:
-            horoscope_dict = json.loads(file.read())
-        
-        for k,v in horoscope_dict.items():
-            print(f"{k} - {v[:50]}")
-        return horoscope_dict
+        try:
+            with open(file=file_path, mode='r') as file:
+                horoscope_dict = json.loads(file.read())
+            # for k,v in horoscope_dict.items():
+            #     # print(f"{k} - {v[:50]}")
+            return horoscope_dict
+        except Exception:
+            logger.error(traceback.format_exc())
 
     def initialize_data(self) -> bool:
         self.latest_horoscope_file = self.get_latest_file(folder_path='horoscopes')

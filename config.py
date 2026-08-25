@@ -10,8 +10,16 @@ class Config:
 
     API_URL = os.getenv("API_URL")
 
+    LOCALE = {
+        "en",
+        "tr",
+        "ru",
+    }
+
     ZODIACS = {
         "Aries": {
+            "tr": "Koç",
+            "ru": "Овен",
             "glyph": "♈",
             "symbol": "Ram",
             "degrees": "000°–030°",
@@ -30,6 +38,8 @@ class Config:
             "custom_text": "Fire sign, ruled by Mars"
         },
         "Taurus": {
+            "tr": "Boğa",
+            "ru": "Телец",
             "glyph": "♉",
             "symbol": "Bull",
             "degrees": "030°–060°",
@@ -48,6 +58,8 @@ class Config:
             "custom_text": "Earth sign, ruled by Venus"
         },
         "Gemini": {
+            "tr": "İkizler",
+            "ru": "Близнецы",
             "glyph": "♊",
             "symbol": "Twins",
             "degrees": "060°–090°",
@@ -66,6 +78,8 @@ class Config:
             "custom_text": "Air sign, ruled by Mercury"
         },
         "Cancer": {
+            "tr": "Yengeç",
+            "ru": "Рак",
             "glyph": "♋",
             "symbol": "Crab",
             "degrees": "090°–120°",
@@ -84,6 +98,8 @@ class Config:
             "custom_text": "Water sign, ruled by the Moon"
         },
         "Leo": {
+            "tr": "Aslan",
+            "ru": "Лев",
             "glyph": "♌",
             "symbol": "Lion",
             "degrees": "120°–150°",
@@ -102,6 +118,8 @@ class Config:
             "custom_text": "Fire sign, ruled by the Sun"
         },
         "Virgo": {
+            "tr": "Başak",
+            "ru": "Дева",
             "glyph": "♍",
             "symbol": "Maiden",
             "degrees": "150°–180°",
@@ -120,6 +138,8 @@ class Config:
             "custom_text": "Earth sign, ruled by Mercury"
         },
         "Libra": {
+            "tr": "Terazi",
+            "ru": "Весы",
             "glyph": "♎",
             "symbol": "Scales",
             "degrees": "180°–210°",
@@ -138,6 +158,8 @@ class Config:
             "custom_text": "Air sign, ruled by Venus"
         },
         "Scorpio": {
+            "tr": "Akrep",
+            "ru": "Скорпион",
             "glyph": "♏",
             "symbol": "Scorpion",
             "degrees": "210°–240°",
@@ -156,6 +178,8 @@ class Config:
             "custom_text": "Water sign, ruled by Mars and Pluto"
         },
         "Sagittarius": {
+            "tr": "Yay",
+            "ru": "Стрелец",
             "glyph": "♐",
             "symbol": "Archer",
             "degrees": "240°–270°",
@@ -174,6 +198,8 @@ class Config:
             "custom_text": "Fire sign, ruled by Jupiter"
         },
         "Capricorn": {
+            "tr": "Oğlak",
+            "ru": "Козерог",
             "glyph": "♑",
             "symbol": "Sea-Goat",
             "degrees": "270°–300°",
@@ -192,6 +218,8 @@ class Config:
             "custom_text": "Earth sign, ruled by Saturn"
         },
         "Aquarius": {
+            "tr": "Kova",
+            "ru": "Водолей",
             "glyph": "♒",
             "symbol": "Water Bearer",
             "degrees": "300°–330°",
@@ -210,6 +238,8 @@ class Config:
             "custom_text": "Air sign, ruled by Saturn and Uranus"
         },
         "Pisces": {
+            "tr": "Balık",
+            "ru": "Рыбы",
             "glyph": "♓",
             "symbol": "Fish",
             "degrees": "330°–360°",

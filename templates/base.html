@@ -7,8 +7,27 @@
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
+    <div class="lang_switch">
+        {% if lang and lang == 'en' %}
+            <a href="/tr"><b>EN</b>|<small>TR</small>|<small>RU</small></a>
+        {% elif lang and lang == 'tr' %}
+            <a href="/ru"><small>EN</small>|<b>TR</b>|<small>RU</small></a>
+        {% elif lang and lang == 'ru' %}
+            <a href="/en"><small>EN</small>|<small>TR</small>|<b>RU</b></a>
+        {% else %}
+            <a href="/en">EN</a>
+        {% endif %}
+    </div>
     <main>
-        <center><h1><a href="/">The Astro Forecast</a></h1></center>
+        {% if lang and lang == 'en' %}
+            <center><h1><a href="/{{ lang }}">The Astro Forecast</a></h1></center>
+        {% elif lang and lang == 'tr' %}
+            <center><h1><a href="/{{ lang }}">Astro Tahmini</a></h1></center>
+        {% elif lang and lang == 'ru' %}
+            <center><h1><a href="/{{ lang }}">Астрологический Прогноз</a></h1></center>
+        {% else %}
+            <center><h1><a href="/{{ lang }}">The Astro Forecast</a></h1></center>
+        {% endif %}
         {% block content %}
         {% endblock %}
     </main>

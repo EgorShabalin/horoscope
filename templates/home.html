@@ -2,14 +2,29 @@
 
 {% block content %}
     <center>
-        {# <nav>
-            <a href="/?lang=EN">English</a>
-            <a href="/?lang=RU">Русский</a>
-            <a href="/?lang=TR">Türkçe</a>
-        </nav> #}
-        <h2>A horoscope for {{ date }}</h2>
+        {% if lang and lang == 'en' %}
+            <h2>A horoscope for <b>{{ date }}</b></h2>
+        {% elif lang and lang == 'tr'%}
+            <h2><b>{{ date }}</b> için Burç Yorumu</h2>
+        {% elif lang and lang == 'ru'%}
+            <h2>Гороскоп на <b>{{ date }}</b></h2>
+        {% else %}
+            <h2>A horoscope for <b>{{ date }}</b></h2>
+        {% endif %}
     </center>
-    {% for zodiac in zodiacs %}
-        <center><h3><a href="/{{ zodiac | lower }}">{{ zodiac | capitalize }}</a></h3></center>
+    {% for sign_name, sign_data in zodiacs.items() %}
+        <center>
+            <h3>
+                <a href="/{{ sign_name | lower }}/{{ lang }}">
+                    {% if lang == 'tr' %}
+                        {{ sign_data.tr | capitalize }}
+                    {% elif lang == 'ru' %}
+                        {{ sign_data.ru | capitalize }}
+                    {% else %}
+                        {{ sign_name | capitalize }}
+                    {% endif %}
+                </a>
+            </h3>
+        </center>
     {% endfor %}
 {% endblock %}
